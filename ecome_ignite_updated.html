@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecome Ignite | Digital Business Accelerator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'premium-red': '#FF0033',
+                        'deep-red': '#8B0A0A',
+                        'gold': '#F8E231',
+                        'rich-gold': '#FFD700',
+                        'dark': '#0A0A0A'
+                    },
+                    fontFamily: {
+                        'heading': ['Montserrat', 'sans-serif'],
+                        'body': ['Open Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Open Sans', sans-serif;
+        }
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+        .hero-bg {
+            background: radial-gradient(ellipse at top, rgba(139, 10, 10, 0.2), transparent),
+                        linear-gradient(to bottom, #000 0%, #130a00 100%);
+        }
+        .about-card {
+            background: linear-gradient(145deg, rgba(255, 0, 51, 0.05), rgba(139, 10, 10, 0.1), rgba(0, 0, 0, 0.2));
+            backdrop-filter: blur(10px);
+        }
+        .plan-card {
+            background: linear-gradient(145deg, rgba(18, 18, 18, 0.9), rgba(30, 30, 30, 0.9));
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(139, 10, 10, 0.1);
+        }
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(248, 226, 49, 0.2);
+        }
+        .plan-card.selected {
+            border: 2px solid #FFD700;
+            background: linear-gradient(145deg, rgba(28, 28, 28, 0.95), rgba(45, 35, 15, 0.95));
+            box-shadow: 0 10px 25px rgba(248, 226, 49, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .plan-card.selected::after {
+            content: '✓ SELECTED';
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            transform: rotate(45deg);
+            background: #FFD700;
+            color: #000;
+            font-size: 10px;
+            padding: 3px 30px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .cta-button {
+            background: linear-gradient(135deg, #FF0033, #8B0A0A);
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 0, 51, 0.4);
+        }
+        .gold-button {
+            background: linear-gradient(135deg, #F8E231, #FFD700);
+            color: #000;
+            transition: all 0.3s ease;
+        }
+        .gold-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(248, 226, 49, 0.4);
+        }
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #F8E231;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+            40% {transform: translateY(-20px) translateX(-50%);}
+            60% {transform: translateY(-10px) translateX(-50%);}
+        }
+        .icon-box {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .gold-border {
+            position: relative;
+        }
+        .gold-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #F8E231, #FFD700);
+            z-index: -1;
+            border-radius: 12px;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+        .feature-bullet {
+            color: #FFD700;
+            margin-right: 10px;
+        }
+        .offer-badge {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: linear-gradient(135deg, #FF0033, #8B0A0A);
+            color: white;
+            font-size: 12px;
+            padding: 3px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+    <!-- Navigation Header -->
+    <header class="fixed w-full z-50 bg-black bg-opacity-90 backdrop-filter backdrop-blur-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="#" class="text-white text-2xl font-bold">
+                    <span class="text-premium-red">ECO</span>
+                    <span class="text-white">ME</span>
+                    <span class="text-gold">IGNITE</span>
+                </a>
+            </div>
+            <a href="#plans" class="hidden md:inline-block gold-button py-2 px-6 rounded-full font-bold">
+                JOIN NOW
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-bg min-h-screen flex items-center relative">
+        <div class="container mx-auto px-6 pt-32 pb-16 z-10">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="w-full md:w-1/2 text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                        <span class="text-gold">IGNITE</span> YOUR MONEY-MAKING <span class="text-premium-red">FUTURE</span>
+                    </h1>
+                    <p class="text-xl mb-8 opacity-90 max-w-lg mx-auto md:mx-0">
+                        Join Ecome Ignite — the Telegram community where digital hustlers master dropshipping, build marketing agencies, and create thriving online businesses.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="https://t.me/+SmXdxZRK83w3MzRk" class="cta-button py-4 px-8 rounded-full text-white font-bold text-lg inline-flex items-center justify-center gap-3">
+                            <i class="fab fa-telegram"></i> JOIN TELEGRAM GROUP
+                        </a>
+                        <a href="#plans" class="gold-button py-4 px-8 rounded-full font-bold text-lg">
+                            EXPLORE PLANS
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 flex justify-center mt-16 md:mt-0">
+                    <div class="relative">
+                        <div class="relative z-10">
+                            <div class="bg-gradient-to-br from-premium-red to-deep-red p-1 rounded-2xl inline-block">
+                                <div class="bg-black rounded-2xl p-8 w-80 h-80 md:w-96 md:h-96 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <div class="mb-6">
+                                            <span class="text-5xl font-bold text-gold">₵100</span>
+                                            <p class="text-premium-red font-bold">LIFETIME ACCESS</p>
+                                        </div>
+                                        <ul class="space-y-2 text-left">
+                                            <li class="flex items-center"><i class="fas fa-check-circle feature-bullet"></i> All Courses & Updates</li>
+                                            <li class="flex items-center"><i class="fas fa-check-circle feature-bullet"></i> Marketing Agency Blueprint</li>
+                                            <li class="flex items-center"><i class="fas fa-check-circle feature-bullet"></i> Dropshipping Mastery</li>
+                                            <li class="flex items-center"><i class="fas fa-check-circle feature-bullet"></i> 24/7 Community Support</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -top-4 -right-4 bg-gold w-24 h-24 rounded-full z-0 opacity-20"></div>
+                        <div class="absolute -bottom-4 -left-4 bg-premium-red w-32 h-32 rounded-full z-0 opacity-20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-down">
+            <i class="fas fa-chevron-down text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">WHAT IS <span class="text-gold">ECOME IGNITE</span>?</h2>
+                <div class="w-24 h-1 bg-premium-red mx-auto"></div>
+            </div>
+
+            <div class="about-card rounded-2xl p-10 max-w-4xl mx-auto mb-16">
+                <p class="text-xl leading-relaxed text-center">
+                    Ecome Ignite is a digital accelerator for ambitious creators. Inside our exclusive Telegram community, members gain instant access to premium self-paced resources on dropshipping, social media marketing, and building sustainable online income streams that transform hustle into financial freedom.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="text-center">
+                    <div class="icon-box">
+                        <i class="fas fa-box text-premium-red text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold my-4">Dropshipping Domination</h3>
+                    <p class="opacity-80">
+                        Step-by-step blueprint for launching and scaling profitable dropshipping businesses.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="icon-box">
+                        <i class="fas fa-bullhorn text-gold text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold my-4">Agency Building</h3>
+                    <p class="opacity-80">
+                        Transform from freelancer to agency owner with our proven client acquisition system.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="icon-box">
+                        <i class="fas fa-chart-line text-premium-red text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold my-4">Income Streams</h3>
+                    <p class="opacity-80">
+                        Multiple online business models that generate passive income while you sleep.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plans and Offers -->
+    <section id="plans" class="py-20 bg-gradient-to-b from-gray-900 to-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">CHOOSE YOUR <span class="text-gold">PLAN</span></h2>
+                <p class="text-xl max-w-2xl mx-auto opacity-90 mb-6">
+                    Select the access level that fits your ambition. Transform your hustle into lasting success.
+                </p>
+                <div class="w-24 h-1 bg-premium-red mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Plan 1 -->
+                <div class="plan-card rounded-xl p-8 gold-border relative plan-card selected" onclick="selectPlan(this)">
+                    <div class="offer-badge">MOST POPULAR</div>
+                    <h3 class="text-3xl font-bold mb-4">
+                        <span class="text-gold">₵100</span> <span class="text-lg">Full Access for Life</span>
+                    </h3>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start"><i class="fas fa-check-circle text-gold mt-1 mr-2"></i> <span>Lifetime membership</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-gold mt-1 mr-2"></i> <span>All courses & strategy updates</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-gold mt-1 mr-2"></i> <span>No expiry. No limits.</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-gold mt-1 mr-2"></i> <span>Priority access to new resources</span></li>
+                    </ul>
+                    <div class="text-center">
+                        <button class="gold-button w-full py-3 rounded-full font-bold">SELECT PLAN</button>
+                    </div>
+                </div>
+
+                <!-- Plan 2 -->
+                <div class="plan-card rounded-xl p-8 relative" onclick="selectPlan(this)">
+                    <h3 class="text-3xl font-bold mb-4">
+                        <span class="text-premium-red">₵50</span> <span class="text-lg">30 Days Access</span>
+                    </h3>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start"><i class="fas fa-check-circle text-premium-red mt-1 mr-2"></i> <span>Full group access</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-premium-red mt-1 mr-2"></i> <span>Valid for 30 days</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-premium-red mt-1 mr-2"></i> <span>Complete course library</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-premium-red mt-1 mr-2"></i> <span>After 30 days, top-up required</span></li>
+                    </ul>
+                    <div class="text-center">
+                        <button class="cta-button w-full py-3 rounded-full font-bold">SELECT PLAN</button>
+                    </div>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="plan-card rounded-xl p-8 relative" onclick="selectPlan(this)">
+                    <h3 class="text-3xl font-bold mb-4">
+                        <span class="text-premium-red">₵30</span> <span class="text-lg">14 Days Access</span>
+                    </h3>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start"><i class="fas fa-check-circle text-premium-red mt-1 mr-2"></i> <span>Group access for 2 weeks</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-premium-red mt-1 mr-2"></i> <span>Core resources available</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-premium-red mt-1 mr-2"></i> <span>Perfect for testing the community</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-premium-red mt-1 mr-2"></i> <span>Upgrade required to continue</span></li>
+                    </ul>
+                    <div class="text-center">
+                        <button class="cta-button w-full py-3 rounded-full font-bold">SELECT PLAN</button>
+                    </div>
+                </div>
+
+                <!-- Plan 4 -->
+                <div class="plan-card rounded-xl p-8 relative" onclick="selectPlan(this)">
+                    <div class="offer-badge">LIMITED TIME</div>
+                    <h3 class="text-3xl font-bold mb-4">
+                        <span class="text-premium-red">₵15</span> <span class="text-lg">7-Day Trial</span>
+                    </h3>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start"><i class="fas fa-check-circle text-premium-red mt-1 mr-2"></i> <span>7-day trial access</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-premium-red mt-1 mr-2"></i> <span>Strictly once per person</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-premium-red mt-1 mr-2"></i> <span>Preview available resources</span></li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-premium-red mt-1 mr-2"></i> <span>Full access requires upgrade</span></li>
+                    </ul>
+                    <div class="text-center">
+                        <button class="cta-button w-full py-3 rounded-full font-bold">SELECT PLAN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section id="newsletter" class="py-20">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">STAY <span class="text-gold">UPDATED</span></h2>
+                <p class="text-xl opacity-90 mb-6">
+                    Get actionable tips, exclusive offers, and success strategies straight to your inbox
+                </p>
+                <div class="w-24 h-1 bg-premium-red mx-auto"></div>
+            </div>
+
+            <div class="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-8 md:p-12">
+                <form action="https://getform.io/f/ajjorgea" method="POST" class="space-y-6">
+                    <div class="pulse bg-gradient-to-br from-gray-800 to-black rounded-2xl p-1">
+                        <input 
+                            type="email" name="email" 
+                            placeholder="Enter your email address" 
+                            class="w-full bg-black rounded-2xl p-5 text-lg focus:outline-none focus:ring-2 focus:ring-gold"
+                        >
+                    </div>
+                    <button type="submit" class="gold-button w-full py-5 rounded-full text-lg font-bold">
+                        GET PREMIUM UPDATES
+                    </button>
+                </form>
+                
+                <div class="mt-12 text-center border-t border-gray-800 pt-8">
+                    <h3 class="text-xl font-bold mb-4">ACCESS PREMIUM RESOURCES TODAY</h3>
+                    <p class="opacity-90 mb-6">
+                        Join hundreds of digital hustlers already transforming their income potential
+                    </p>
+                    <a href="https://t.me/+SmXdxZRK83w3MzRk" class="cta-button inline-flex items-center justify-center gap-3 py-4 px-8 rounded-full text-white font-bold text-lg">
+                        <i class="fab fa-telegram"></i> JOIN OUR TELEGRAM GROUP
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-t from-black to-gray-900 py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <a href="https://t.me/+SmXdxZRK83w3MzRk" class="text-white text-2xl font-bold mb-4 inline-block">
+                    <span class="text-premium-red">ECO</span>
+                    <span class="text-white">ME</span>
+                    <span class="text-gold">IGNITE</span>
+                </a>
+                <p class="opacity-70 max-w-2xl mx-auto">
+                    Ecome Ignite is a digital accelerator dedicated to helping African youth master online business strategies and create sustainable income streams.
+                </p>
+                <div class="flex justify-center gap-6 mt-8">
+                    <a href="https://t.me/+SmXdxZRK83w3MzRk" class="text-gold hover:text-white"><i class="fab fa-telegram fa-2x"></i></a>
+                    <a href="https://t.me/+SmXdxZRK83w3MzRk" class="text-gold hover:text-white"><i class="fab fa-instagram fa-2x"></i></a>
+                    <a href="https://t.me/+SmXdxZRK83w3MzRk" class="text-gold hover:text-white"><i class="fab fa-twitter fa-2x"></i></a>
+                    <a href="https://t.me/+SmXdxZRK83w3MzRk" class="text-gold hover:text-white"><i class="fab fa-facebook fa-2x"></i></a>
+                </div>
+                <p class="mt-8 opacity-50">
+                    © 2023 Ecome Ignite. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Plan Selection Logic
+        function selectPlan(planElement) {
+            // Remove selection from all plans
+            document.querySelectorAll('.plan-card').forEach(plan => {
+                plan.classList.remove('selected');
+            });
+            
+            // Add selection to clicked plan
+            planElement.classList.add('selected');
+            
+            // Scroll to the top of plans section for better visibility on mobile
+            document.getElementById('plans').scrollIntoView({behavior: 'smooth'});
+        }
+        
+        // Form validation and submission handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const emailInput = form.querySelector('input[type="email" name="email"]');
+                    
+                    if (!emailInput.value || !isValidEmail(emailInput.value)) {
+                        alert('Please enter a valid email address');
+                        emailInput.focus();
+                        return;
+                    }
+                    
+                    // Here you would normally submit to your form handler
+                    alert('Thank you for subscribing! You will receive updates soon.');
+                    form.reset();
+                });
+            }
+            
+            function isValidEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+        });
+    </script>
+<p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=allenprime/new-start" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
+</html>
